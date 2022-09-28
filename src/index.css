@@ -1,5 +1,10 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow-y: scroll;
+    margin: 0;
+  }
 body {
-  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -10,4 +15,219 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+.map-container{
+  height: 100vh;
+}
+.info-window{
+  width: 250px;
+  height: 400px;
+  color: black;
+  text-align: left;
+  font-weight: bolder;
+}
+.info-window-address{
+  font-weight: bold;
+}
+.heading{
+  color: white;
+  background-color: black;
+  padding: 5px;
+  font-weight: bold;
+}
+.dot-yellow {
+  height: 15px;
+  width: 15px;
+  background-color: rgb(243, 223, 40);
+  border-radius: 50%;
+  display: inline-block;
+}
+.dot-red {
+  height: 15px;
+  width: 15px;
+  background-color: rgb(245, 16, 16);
+  border-radius: 50%;
+  display: inline-block;
+}
+.dot-green {
+  height: 15px;
+  width: 15px;
+  background-color: rgb(36, 224, 18);
+  border-radius: 50%;
+  display: inline-block;
+}
+.square-yellow {
+  height: 15px;
+  width: 15px;
+  background-color: rgb(243, 223, 40);
+  display: inline-block;
+}
+.square-red {
+  height: 15px;
+  width: 15px;
+  background-color: rgb(245, 16, 16);
+  display: inline-block;
+}
+.square-green {
+  height: 15px;
+  width: 15px;
+  background-color: rgb(36, 224, 18);
+  display: inline-block;
+}
+.flag-container{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.flag-container p{
+  width: 33.3%;
+  height: 5px;
+}
+.infotime-voltage-container{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: 0px;
+  margin-left: 10px;
+}
+.infotime-voltage-container p {
+  width: 50%;
+}
+.button-container{
+  float: right;
+  margin: 5px;
+}
+.save{
+  background-color: #00A9D5;
+}
+.cancel{
+  background-color: rgb(97, 96, 96);
+}
+.save, .cancel{
+  width: 70px;
+  height: 25px;
+  border: none;
+  color: white;
+  font-weight: bold;
+}
+nav{
+  height: 100%;
+  width: max-content;
+  background-color: black;
+  position: absolute;
+  z-index: 1 !important;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+nav a{
+    text-decoration: none;
+    color: white;
+}
+.logo-image{
+  padding-top: 100px;
+  width: 300px;
+  height: 150px;
+}
+.devices-heading{
+  width: 200px;
+  margin-left: 20px;
+  font-weight: bold;
+  font-size: 17px;
+}
+.devices-nav{
+  display: flex;
+  flex-direction: row;
+  background-color: black;
+  color: white;
+}
+.devices-nav button{
+  float: left;
+  color: white;
+  background-color: rgb(151, 151, 151);
+  text-align: center;
+  padding: 5px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  text-align: center;
+  margin: 10px;
+  border: none;
+  height: 30px;
+  font-weight: bold;
+}
+.devices-nav button:hover{
+  background-color: #ddd;
+  color: black;
+}
+.devices-nav-right{
+  float: right;
+  width: 220px;
+}
+.add-device{
+  background-color: #00A9D5!important;
+  float:right;
+}
+.devices-container{
+  margin: 20px;
+  height: 650px;
+  overflow: scroll;
+}
+.devices-content{
+  height: fit-content;
+  overflow: scroll;
+}
+.devices-flag-container{
+  display: flex;
+  flex-direction: row;
+  margin-left: -5px;
+}
+.devices-flag-container p{
+  margin-left: 5px;
+}
+.devices-data-container-heading{
+  display: flex;
+  flex-direction: row;
+  width: 800px;
+  border-bottom: 1px solid black;
+}
+.devices-data-container-heading p{
+  width: 25%;
+  font-weight: bold;
+}
+.devices-data-container{
+  width: 800px;
+  height: 50px;
+}
+.devices-data-container-content{
+  display: flex;
+  flex-direction: row;
+  height: 50px;
+  border-bottom: 1px solid black;
+}
+.devices-data-container-content p{
+  width: 25%;
+}
+.link{
+  font-size: 30px;
+  margin: 10px;
+  font-weight: bold;
+}
+.layout-navbar li{
+  border-bottom: 1px solid white;
+  width: 80%;
+}
+.layout-navbar .link:hover{
+  color: #00A9D5;
+}
+.filter-device:hover +.filter-device-options {
+  display: grid;
+  position: absolute;
+  top: 40px;
+  left: 250px;
+  padding: 0!important;
+  margin: 0!important;
+}
+.filter-device-options {
+  display: none;
 }
