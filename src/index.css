@@ -197,7 +197,7 @@ nav a{
 }
 .devices-data-container{
   width: 800px;
-  height: 50px;
+  /* height: 50px; */
 }
 .devices-data-container-content{
   display: flex;
@@ -220,7 +220,7 @@ nav a{
 .layout-navbar .link:hover{
   color: #00A9D5;
 }
-.filter-device:hover +.filter-device-options {
+.filter-device {
   display: grid;
   position: absolute;
   top: 40px;
@@ -228,6 +228,6 @@ nav a{
   padding: 0!important;
   margin: 0!important;
 }
-.filter-device-options {
+/* .filter-device-options {
   display: none;
-}
+} */

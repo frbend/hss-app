@@ -16,6 +16,10 @@ export default function Home() {
 function Map() {
     const [activeMarker, setActiveMarker] = useState(null);
     const center = useMemo(() => ({ lat: 56, lng: 12 }), []);
+    const [item] = useState(importData.$values);
+    //toggling of the flags in state
+    // const [isToggled, setIsToggled] = useState(false);
+
 
     const handleActiveMarker = (marker) => {
         if (marker === activeMarker) {
@@ -26,10 +30,23 @@ function Map() {
 
     const getFlagColor = (result) =>{
         if(result === true){
-          return <span className="square-green"></span>
+          return <a href="#" onClick={() =>switchFlagColor(result)} id="green"><span className="square-green"></span></a>
         }if(result === false)
-        return <span className="square-red"></span>
+        return <a href="#" onClick={() =>switchFlagColor(result)} id="red"><span className="square-red"></span></a>
       }
+
+      // const toggle = useCallback(
+      //   () => setIsToggled(!isToggled),
+      //   [isToggled, setIsToggled],
+      //   console.log(isToggled)
+      // );
+
+      const switchFlagColor = (result) =>{
+        if(result === true){
+          return console.log(result)
+        }
+        else console.log(result)
+      };
 
     const getStatusColor = (status ) =>{
       if(status === 'Normal'){
@@ -43,6 +60,11 @@ function Map() {
       }
     }
 
+    //TODO: - Clustering on the map
+    //      - Toggle flags from infoWindow and save it in JSON -> Need backend???
+    //      - Devices page - buttons + filter results -- DONE (In CONSOLE ONLY)
+    // TODO: Fix mapping on MapView and Devices if there's time??
+
 
   return (
     <GoogleMap 
@@ -53,7 +75,8 @@ function Map() {
       {/* <MarkerClusterer>
           {clusterer =>
           positions.map(position=>{ */}
-        {importData.$values[0].regionDeviceList.$values.map((
+
+        {item[0].regionDeviceList.$values.map((
             {dId, address, location, name, image, status, 
             Flag1, Flag2, Flag3, Flag4, Flag5,
             infotime, voltage}) =>(
