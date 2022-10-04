@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useMemo } from "react";
-import { GoogleMap, InfoWindowF ,useLoadScript, MarkerF } from "@react-google-maps/api";
+import { GoogleMap, InfoWindowF, useLoadScript, MarkerF, MarkerClusterer } from "@react-google-maps/api";
 import  importData  from '../Data/Data.json';
 
 
 export default function Home() {
+  //Load Script for Google Maps, if Map is not loaded returns "Loading..."
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: 'AIzaSyBZGmD2snfDxTBUjFjphUiA-bPNz8WokQc',
   });
@@ -20,7 +21,6 @@ function Map() {
     //toggling of the flags in state
     // const [isToggled, setIsToggled] = useState(false);
 
-
     const handleActiveMarker = (marker) => {
         if (marker === activeMarker) {
           return;
@@ -28,11 +28,12 @@ function Map() {
         setActiveMarker(marker);
       };
 
+      //Returns flag color based on state of the flag, onClick prints flag state in console
     const getFlagColor = (result) =>{
         if(result === true){
-          return <a href="#" onClick={() =>switchFlagColor(result)} id="green"><span className="square-green"></span></a>
+          return <span onClick={() =>switchFlagColor(result)} className="square-green"></span>
         }if(result === false)
-        return <a href="#" onClick={() =>switchFlagColor(result)} id="red"><span className="square-red"></span></a>
+        return <span onClick={() =>switchFlagColor(result)} className="square-red"></span>
       }
 
       // const toggle = useCallback(
@@ -41,13 +42,13 @@ function Map() {
       //   console.log(isToggled)
       // );
 
+      //Unfinished switching of flag color, currently only logs flag state
       const switchFlagColor = (result) =>{
-        if(result === true){
-          return console.log(result)
-        }
-        else console.log(result)
+
+        console.log(result)
       };
 
+      //Returns siren status colors based on status of the siren
     const getStatusColor = (status ) =>{
       if(status === 'Normal'){
           return <span className="dot-green"></span>
@@ -61,117 +62,110 @@ function Map() {
     }
 
     //TODO: - Clustering on the map
-    //      - Toggle flags from infoWindow and save it in JSON -> Need backend???
+    //      - Toggle flags from infoWindow and save it in JSON -> Need backend??? -> flags show their result
     //      - Devices page - buttons + filter results -- DONE (In CONSOLE ONLY)
-    // TODO: Fix mapping on MapView and Devices if there's time??
+    // TODO: Fix mapping on MapView and Devices if there's time?? -- DONE
 
 
-  return (
-    <GoogleMap 
-        zoom={8} center={center} 
-        mapContainerClassName="map-container" 
-        onClick={() => setActiveMarker(null)}
-        >
-      {/* <MarkerClusterer>
-          {clusterer =>
-          positions.map(position=>{ */}
+    //Options for MarkerClusterer, required
+    const options = {
+      gridSize: 20,
+      minimumClusterSize: 2,
+      imagePath:
+      'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m', // so you must have m1.png, m2.png, m3.png, m4.png, m5.png and m6.png in that folder
+    }
 
-        {item[0].regionDeviceList.$values.map((
-            {dId, address, location, name, image, status, 
-            Flag1, Flag2, Flag3, Flag4, Flag5,
-            infotime, voltage}) =>(
-            <MarkerF
-                    // clusterer={clusterer}
-                    icon={{url:(require('../Img/Siren.png'))}}
-                    key={dId}
-                    address = {address}
-                    position={{lat: location.y,lng: location.x}}
-                    name={name}
-                    image={image}
-                    onClick={() => handleActiveMarker(dId)}
-                    >
-                {activeMarker === dId ? (
+    //Calculator for MarkerClusterer and options such as text on cluster
+    const calculator = function (markers, numStyles) {
+      var index = 0;
+      var count = markers.length;
 
-                <InfoWindowF onCloseClick={() => setActiveMarker(null)}>
-                <div className="info-window">
-                    <p className="heading">{name}</p>
-                    <p>Location: </p>
-                    <p className="info-window-address">{address}</p>
-                    <p>Insert location</p>
-                    <p>Status {getStatusColor(status)}</p>
-                    <img src={`${image}`} alt="" width="250px" height="130px"></img>
-                    <p className="heading">Siren status</p>
-                    <div className="flag-container">
-                        <p>{getFlagColor(Flag1)} Flag 1</p>
-                        <p>{getFlagColor(Flag2)} Flag 2</p>
-                        <p>{getFlagColor(Flag3)} Flag 3</p>
-                        <p>{getFlagColor(Flag4)} Flag 4</p>
-                        <p>{getFlagColor(Flag5)} Flag 5</p>
-                    </div>
-                    <div className="infotime-voltage-container">
-                        <p>Info time</p>
-                        <p>Voltage</p>
-                        <p>{infotime}</p>
-                        <p>{voltage}</p>
-                    </div>
-                    <div className="button-container">
-                        <button className="save">Save</button>
-                        <button className="cancel">Cancel</button>
-                    </div>
-                </div>
-                </InfoWindowF>
-            ) : null}
-            </MarkerF>
-        ))}
-      {/* })
-                }</MarkerClusterer> */}
-          {importData.$values[1].regionDeviceList.$values.map((
-          {dId, address, location, name, image, status,
-           Flag1, Flag2, Flag3, Flag4, Flag5,
-          infotime, voltage}) =>(
-            <MarkerF
-            // clusterer={clusterer}
-            icon={{url:(require('../Img/Siren.png'))}}
-            key={dId}
-            address = {address}
-            position={{lat: location.y,lng: location.x}}
-            name={name}
-            image={image}
-            onClick={() => handleActiveMarker(dId)}
-            >
-        {activeMarker === dId ? (
-
-        <InfoWindowF onCloseClick={() => setActiveMarker(null)}>
-        <div className="info-window">
-            <p className="heading">{name}</p>
-            <p>Location: </p>
-            <p className="info-window-address">{address}</p>
-            <p>Insert location</p>
-            <p>Status {getStatusColor(status)}</p>
-            <img src={`${image}`} alt="" width="250px" height="130px"></img>
-            <p className="heading">Siren status</p>
-                <div className="flag-container">
-                    <p>{getFlagColor(Flag1)} Flag 1</p>
-                    <p>{getFlagColor(Flag2)} Flag 2</p>
-                    <p>{getFlagColor(Flag3)} Flag 3</p>
-                    <p>{getFlagColor(Flag4)} Flag 4</p>
-                    <p>{getFlagColor(Flag5)} Flag 5</p>
-                </div>
-                <div className="infotime-voltage-container">
-                    <p>Info time</p>
-                    <p>Voltage</p>
-                    <p>{infotime}</p>
-                    <p>{voltage}</p>
+      var dv = count;
+      while (dv !== 0) {
+        dv = parseInt(dv / 5, 5);
+        index++;
+      }
+    
+      index = Math.min(index, numStyles);
+      return {
+        text: count,
+        index: index,
+        title: count
+      };
+    };
+    
+    //Google maps data - returns GoogleMap, MarkerClusterer, Markers based on location and
+    //InfoWindow for each marker
+    //MarkerClusterer does not work properly with this API, if changed to GoogleMarkerClusterer (incl. import)
+    //clutering then works only until page is refreshed or switched to Devices
+    const googleMapsData = 
+        <GoogleMap 
+            zoom={8} center={center} 
+            mapContainerClassName="map-container" 
+            onClick={() => setActiveMarker(null)}>
+            {item.map((items) =>{
+              return (
+                  <div key={items.$id} className="devices-data-container">
+                    <MarkerClusterer
+                        enableRetinaIcons={true}
+                        options={options}
+                        maxZoom={10}
+                        onClusteringBegin={options}
+                        calculator={calculator}
+                        >{(clusterer) =>
+                          (items.regionDeviceList.$values.map((subItems) => (
+                            <MarkerF
+                                icon={{url:(require('../Img/Siren.png'))}}
+                                key={subItems.dId}
+                                address = {subItems.address}
+                                position={{lat: subItems.location.y,lng: subItems.location.x}}
+                                name={subItems.name}
+                                image={subItems.image}
+                                onClick={() => handleActiveMarker(subItems.dId)}
+                                clusterer={clusterer}
+                                >{activeMarker === subItems.dId ? (
+                                    <InfoWindowF onCloseClick={() => setActiveMarker(null)}>
+                                        <div className="info-window">
+                                            <p className="siren-heading-top">{subItems.name}</p>
+                                            <p>Location: </p>
+                                            <p className="info-window-address">{subItems.address}</p>
+                                            <p>Insert location</p>
+                                            <p>Status <br/>{getStatusColor(subItems.status)}</p>
+                                            <img src={`${subItems.image}`} alt="" width="250px" height="130px"></img>
+                                            <p className="siren-heading-bottom">Siren status</p>
+                                            <div className="flag-container">
+                                                <p>{getFlagColor(subItems.Flag1)} Flag 1</p>
+                                                <p>{getFlagColor(subItems.Flag2)} Flag 2</p>
+                                                <p>{getFlagColor(subItems.Flag3)} Flag 3</p>
+                                                <p>{getFlagColor(subItems.Flag4)} Flag 4</p>
+                                                <p>{getFlagColor(subItems.Flag5)} Flag 5</p>
+                                            </div>
+                                            <div className="infotime-voltage-container">
+                                                <p>Info time</p>
+                                                <p>Voltage</p>
+                                                <p>{subItems.infotime}</p>
+                                                <p>{subItems.voltage}</p>
+                                            </div>
+                                            <div className="button-container">
+                                                <button className="save">Save</button>
+                                                <button className="cancel">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </InfoWindowF>
+                                ) : null}
+                            </MarkerF>
+                          )))
+                        }
+                    </MarkerClusterer>
                   </div>
-                  <div className="button-container">
-                      <button className="save">Save</button>
-                      <button className="cancel">Cancel</button>
-                  </div>
-            </div>
-            </InfoWindowF>
-            ) : null}
-        </MarkerF>
-        ))}
-    </GoogleMap>
-  );
+                );
+              })
+            }    
+        </GoogleMap>
+
+    return (
+      <div>
+      {googleMapsData}
+      </div>
+    );
 }
