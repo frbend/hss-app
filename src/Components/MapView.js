@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import { GoogleMap, InfoWindowF, useLoadScript, MarkerF, MarkerClusterer } from "@react-google-maps/api";
 import  importData  from '../Data/Data.json';
 
@@ -19,7 +18,7 @@ function Map() {
     const center = useMemo(() => ({ lat: 56, lng: 12 }), []);
     const [item] = useState(importData.$values);
     //toggling of the flags in state
-    // const [isToggled, setIsToggled] = useState(false);
+    // const [isToggled, setIsToggled] = useState(null);
 
     const handleActiveMarker = (marker) => {
         if (marker === activeMarker) {
@@ -48,7 +47,7 @@ function Map() {
         console.log(result)
       };
 
-      //Returns siren status colors based on status of the siren
+      //Returns siren colors based on status of the siren
     const getStatusColor = (status ) =>{
       if(status === 'Normal'){
           return <span className="dot-green"></span>
@@ -60,12 +59,6 @@ function Map() {
           return <span className="dot-red"></span>
       }
     }
-
-    //TODO: - Clustering on the map
-    //      - Toggle flags from infoWindow and save it in JSON -> Need backend??? -> flags show their result
-    //      - Devices page - buttons + filter results -- DONE (In CONSOLE ONLY)
-    // TODO: Fix mapping on MapView and Devices if there's time?? -- DONE
-
 
     //Options for MarkerClusterer, required
     const options = {
@@ -97,7 +90,7 @@ function Map() {
     //Google maps data - returns GoogleMap, MarkerClusterer, Markers based on location and
     //InfoWindow for each marker
     //MarkerClusterer does not work properly with this API, if changed to GoogleMarkerClusterer (incl. import)
-    //clutering then works only until page is refreshed or switched to Devices
+    //clustering then works only until page is refreshed or switched to Devices then all markers dissapear
     const googleMapsData = 
         <GoogleMap 
             zoom={8} center={center} 
@@ -107,10 +100,8 @@ function Map() {
               return (
                   <div key={items.$id} className="devices-data-container">
                     <MarkerClusterer
-                        enableRetinaIcons={true}
                         options={options}
                         maxZoom={10}
-                        onClusteringBegin={options}
                         calculator={calculator}
                         >{(clusterer) =>
                           (items.regionDeviceList.$values.map((subItems) => (

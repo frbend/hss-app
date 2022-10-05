@@ -17,7 +17,7 @@ function Devices(){
         return <span className="square-red"></span>
       }
 
-    //Returns siren status colors based on status of the siren
+    //Returns siren colors based on status of the siren
       const getStatusColor = (status ) =>{
         if(status === 'Normal'){
             return <span className="dot-green"></span>
@@ -31,7 +31,7 @@ function Devices(){
       }
 
 
-    //Filter sirens with "Normal" status
+    //Filter sirens with "Normal" status (unfinished)
     const filterActive = () => {
         item.map((items) =>{
            return items.regionDeviceList.$values.filter(subItem => subItem.status === "Normal").map(filteredActiveItem =>(
@@ -109,7 +109,7 @@ function Devices(){
             <div className="devices-nav">
                 <p className="devices-heading">Devices</p>
 
-                <div className="filter-device-options">
+                <div className="devices-nav-filter-devices-options">
                     <button onClick={() => filterActive()}><span className="dot-green"></span>Active</button>
                     <button onClick={() => filterPartial()}><span className="dot-yellow"></span>Partial</button>
                     <button onClick={() => filterFailed()}><span className="dot-red"></span>Off</button>
@@ -121,23 +121,24 @@ function Devices(){
                 </div>
             </div>
             <div className="devices-container">
-                <div className="devices-left-side-container">
-                    <p className="devices-left-side-container-heading-top">Sirens</p>
-                    <div>
-                        <p className="number-circle-red">2 </p>
-                        <p className="devices-left-side-container-text-red">Off</p>
-                    </div>
-                    <div>
-                        <p className="number-circle-yellow">1 </p>
-                        <p className="devices-left-side-container-text-yellow">Partial</p>
-                    </div><br/><br/>
+                        {/* Hardcoded left side container */}
+                        <div className="devices-left-side-container">
+                            <p className="devices-left-side-container-heading-sirens">Sirens</p>
+                            <div>
+                                <p className="number-circle-red">2 </p>
+                                <p className="devices-left-side-container-text-red">Off</p>
+                            </div>
+                            <div>
+                                <p className="number-circle-yellow">1 </p>
+                                <p className="devices-left-side-container-text-yellow">Partial</p>
+                            </div><br/><br/>
 
-                    <p className="devices-left-side-container-heading-bottom">Control Centers</p>
-                    <div>
-                        <p className="number-circle-grey">1 </p>
-                        <p className="devices-left-side-container-text-grey">Off</p>
-                    </div>
-                </div>
+                            <p className="devices-left-side-container-heading-control">Control Centers</p>
+                            <div>
+                                <p className="number-circle-grey">1 </p>
+                                <p className="devices-left-side-container-text-grey">Off</p>
+                            </div>
+                        </div>
 
                 <div className="devices-content">
                     {devicesData}

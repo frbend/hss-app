@@ -216,7 +216,7 @@ nav a{
 /* .devices-left-side-container p{
   float: right;
 } */
-.devices-left-side-container-heading-top{
+.devices-left-side-container-heading-sirens{
   background-color: #00A9D5;
   color: white;
   font-weight: bold;
@@ -224,7 +224,7 @@ nav a{
   padding: 5px;
   text-align: center;
 }
-.devices-left-side-container-heading-bottom{
+.devices-left-side-container-heading-control{
   background-color: rgb(151, 151, 151);
   color: white;
   font-weight: bold;
